@@ -1,0 +1,7 @@
+services:
+  - docker
+
+dist: focal
+
+script:
+  - docker build .
