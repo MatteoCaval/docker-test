@@ -3,5 +3,13 @@ services:
 
 dist: focal
 
+env:
+  global:
+    - TZ=UTC # timezone importante, altrimenti cambierebbe in base al luogo in cui mi trovo
+    - IMAGE_NAME="matteocaval/docker-test"
+
+before_script:
+  - export TAG="$(git describe || git log -n1 --date=format:'%Y-%m-%dT%H%M%S' --format=%cd)$(date +%Y-%m-%d_%H%M)"
+
 script:
-  - docker build .
+  - docker build -t $IMAGE_NAME:latest -t $IMAGE_NAME:$TAG . # genero con il doppio nome
