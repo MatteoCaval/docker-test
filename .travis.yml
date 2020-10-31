@@ -13,3 +13,8 @@ before_script:
 
 script:
   - docker build -t $IMAGE_NAME:latest -t $IMAGE_NAME:$TAG . # genero con il doppio nome
+  # Login into docker hub from a non-interactive terminal
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin docker.io
+  # Push the images, with both names (upload will happen only once, as they refer the same layer)
+  - docker push $IMAGE_NAME:$TAG
+  - docker push $IMAGE_NAME:latest
